@@ -2,14 +2,42 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Reportes de comentarios negativos</title>
+        <title>Reportes de comentarios</title>
     </h:head>
     <h:body>
-        <h1>Reportes de comentarios negativos</h1>
-        <h:form>
-
+        <h:form id = "UsuariosActuales">
+            <h3 style="margin-top: 0">el año a buscar</h3>
+            <p:inputText value="#{RegistroBean.year}"/>
+            <h3 style="margin-top: 0">ingrese la cantidad</h3>
+            <p:inputText value="#{RegistroBean.n}"/>
+            <h:commandButton action="consultar" update="tabla" actionListener="#{RegistroBean.mirarTop()}" />
+        </h:form>
+        <h:form id ="tabla">
+            <p:layoutUnit position="center" resizable="true" size="700" minSize="40" maxSize="1000">
+                <p:dataTable id="todas_consultas" var="consulta" value="#{RegistroBean.sp.topNPacientesPorAnyo(N, year)}"  >
+                    <p:column headerText="ID">
+                        <h:outputText value="#{consulta.id}" />
+                    </p:column>
+                    <p:column headerText="tipo ID">
+                        <h:outputText value="#{consulta.tipo_id}" />
+                    </p:column>
+                    <p:column headerText="Nombre">
+                        <h:outputText value="#{consulta.nombre}" />
+                    </p:column>
+                    <p:column headerText="Fecha de nacimiento">
+                        <h:outputText value="#{consulta.fechaNacimiento}" />
+                    </p:column>
+                    <p:column headerText="Fecha y hora">
+                        <h:outputText value="#{consulta.fechaNacimiento}" />
+                    </p:column>
+                    <p:column headerText="resumen">
+                        <h:outputText value="#{consulta.toString}" />
+                    </p:column>
+                </p:dataTable>
+            </p:layoutUnit>
         </h:form>
     </h:body>
 </html>
