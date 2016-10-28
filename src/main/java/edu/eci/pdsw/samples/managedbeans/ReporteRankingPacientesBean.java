@@ -16,6 +16,7 @@
  */
 package edu.eci.pdsw.samples.managedbeans;
 
+import edu.eci.pdsw.samples.entities.Paciente;
 import edu.eci.pdsw.samples.services.ServiceFacadeException;
 import java.io.Serializable;
 import edu.eci.pdsw.samples.services.ServicesFacade;
@@ -23,8 +24,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,116 +41,28 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean(name="RegistroBean")
 @SessionScoped
 public class ReporteRankingPacientesBean implements Serializable{
+
+    public ReporteRankingPacientesBean(){
+        respuestas = new ArrayList<Paciente>();
+        N = 1;
+        year = 2000;
+    }
+    /**
+     * @return the respuestas
+     */
+    public List<Paciente> getRespuestas() {
+        return respuestas;
+    }
+
+    /**
+     * @param respuestas the respuestas to set
+     */
+    public void setRespuestas(List<Paciente> respuestas) {
+        this.respuestas = respuestas;
+    }
   
-   private static ServicesFacade sp =ServicesFacade.getInstance("applicationconfig_1.properties");
-
-    /**
-     * @return the sp
-     */
-    public static ServicesFacade getSp() {
-        return sp;
-    }
-
-    /**
-     * @param aSp the sp to set
-     */
-    public static void setSp(ServicesFacade aSp) {
-        sp = aSp;
-    }
-    
-    private int idPaciente;
-    private String tipoID;
-    private String nombrePaciente;
-    private Date fechaNacimiento;
-    private Date Fecha_Y_hora;
-    private String resumen;
-    
-
-
-    /**
-     * @return the idPaciente
-     */
-    public int getIdPaciente() {
-        return idPaciente;
-    }
-
-    /**
-     * @param idPaciente the idPaciente to set
-     */
-    public void setIdPaciente(int idPaciente) {
-        this.idPaciente = idPaciente;
-    }
-
-    /**
-     * @return the tipoID
-     */
-    public String getTipoID() {
-        return tipoID;
-    }
-
-    /**
-     * @param tipoID the tipoID to set
-     */
-    public void setTipoID(String tipoID) {
-        this.tipoID = tipoID;
-    }
-
-    /**
-     * @return the nombrePaciente
-     */
-    public String getNombrePaciente() {
-        return nombrePaciente;
-    }
-
-    /**
-     * @param nombrePaciente the nombrePaciente to set
-     */
-    public void setNombrePaciente(String nombrePaciente) {
-        this.nombrePaciente = nombrePaciente;
-    }
-
-    /**
-     * @return the fechaNacimiento
-     */
-    public Date getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    /**
-     * @param fechaNacimiento the fechaNacimiento to set
-     */
-    public void setFechaNacimiento(Date fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
-
-    /**
-     * @return the Fecha_Y_hora
-     */
-    public Date getFecha_Y_hora() {
-        return Fecha_Y_hora;
-    }
-
-    /**
-     * @param Fecha_Y_hora the Fecha_Y_hora to set
-     */
-    public void setFecha_Y_hora(Date Fecha_Y_hora) {
-        this.Fecha_Y_hora = Fecha_Y_hora;
-    }
-
-    /**
-     * @return the resumen
-     */
-    public String getResumen() {
-        return resumen;
-    }
-
-    /**
-     * @param resumen the resumen to set
-     */
-    public void setResumen(String resumen) {
-        this.resumen = resumen;
-    }
-    
+    private ServicesFacade sp =ServicesFacade.getInstance("applicationconfig.properties");
+    private List<Paciente> respuestas;
     private int N;
     private int year;
 
@@ -181,7 +96,12 @@ public class ReporteRankingPacientesBean implements Serializable{
     
     public void MirarTop(){
         try{
-            sp.topNPacientesPorAnyo(N, year);
+            respuestas = new ArrayList<Paciente>();
+            List<Paciente> x = sp.topNPacientesPorAnyo(N, year);
+            for(Paciente ee:x){
+                if(ee.getConsultas().size()<=N)
+                    respuestas.add(ee);
+            }
         }catch(ServiceFacadeException ex){
         }
     }

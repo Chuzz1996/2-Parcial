@@ -13,28 +13,18 @@
             <p:inputText value="#{RegistroBean.year}"/>
             <h3 style="margin-top: 0">ingrese la cantidad</h3>
             <p:inputText value="#{RegistroBean.n}"/>
-            <h:commandButton action="consultar" update="tabla" actionListener="#{RegistroBean.mirarTop()}" />
-        </h:form>
-        <h:form id ="tabla">
+            <p:separator />
+            <p:commandButton value="consultar" update="UsuariosActuales" actionListener="#{RegistroBean.MirarTop()}" />
             <p:layoutUnit position="center" resizable="true" size="700" minSize="40" maxSize="1000">
-                <p:dataTable id="todas_consultas" var="consulta" value="#{RegistroBean.sp.topNPacientesPorAnyo(N, year)}"  >
-                    <p:column headerText="ID">
-                        <h:outputText value="#{consulta.id}" />
-                    </p:column>
-                    <p:column headerText="tipo ID">
-                        <h:outputText value="#{consulta.tipo_id}" />
-                    </p:column>
+                <p:dataTable id="todas_consultas" var="consulta" value="#{RegistroBean.respuestas}"  >
                     <p:column headerText="Nombre">
                         <h:outputText value="#{consulta.nombre}" />
                     </p:column>
-                    <p:column headerText="Fecha de nacimiento">
-                        <h:outputText value="#{consulta.fechaNacimiento}" />
+                    <p:column headerText="ID">
+                        <h:outputText value="#{consulta.id}" />
                     </p:column>
-                    <p:column headerText="Fecha y hora">
-                        <h:outputText value="#{consulta.fechaNacimiento}" />
-                    </p:column>
-                    <p:column headerText="resumen">
-                        <h:outputText value="#{consulta.toString}" />
+                    <p:column headerText="Cantidad de consultas">
+                        <h:outputText value="#{consulta.consultas.size()}" />
                     </p:column>
                 </p:dataTable>
             </p:layoutUnit>

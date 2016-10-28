@@ -1,0 +1,2 @@
+Las correciones hechas estan como primero el xhtml el cual se quito tantas cosas que debia mostrar, y corrigio la estructura que estaba incorrecta, por lo cual no dejaba que se despliegara el index.
+En el ReporteRankin se quitaron atributos sin uso y el metodo que actualizaba la consulta se agrego a una lista para ser mostrado, al igual que el nombre mal de la referencia de la base de datos a la cual se estaba consultando.

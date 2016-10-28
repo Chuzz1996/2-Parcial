@@ -10,14 +10,13 @@
         <id property='tipo_id' column='tipo_id'/>
         <result property='fechaNacimiento' column='fecha_nacimiento'/>
         <result property='nombre' column='nombre'/>
-        
+        <collection property='consultas' ofType='Consulta' resultMap='ConsultaResult'></collection>
     </resultMap>
     
     <resultMap type='Consulta' id='ConsultaResult'>
         <id property='id' column='idCONSULTAS'/>
         <result property='fechayHora' column='fecha_y_hora'/>
         <result property='resumen' column='resumen'/>
-        <association property="autor" javaType="Paciente" resultMap='PacienteResult' columnPrefix='pc_'></association>
     </resultMap>
     
 
